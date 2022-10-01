@@ -16,22 +16,22 @@ function App() {
 
   const [backendData, setBackendData] = useState([{}])
 
-  useEffect(() => {
-    fetch("http://localhost:3000/api").then(
-    response => response.json
-    ).then(
-      data => {
-        setBackendData(data)
-        console.log('tried to fetch')
-      }
-    )
-  }, [])
+  // useEffect(() => {
+  //   fetch("http://localhost:3000/api").then(
+  //   response => response.json
+  //   ).then(
+  //     data => {
+  //       setBackendData(data)
+  //       console.log('tried to fetch')
+  //     }
+  //   )
+  // }, [])
 
 
   // useEffect()
-  // fetch("http://localhost:3000/api").then(
-  //   response => console.log(response)
-  // )
+  fetch("http://localhost:3000/api").then(
+    response => console.log(response)
+  )
 
 
 

@@ -3,12 +3,12 @@ const express = require("express")
 const cors = require('cors')
 const app = express()
 
-const corsOptions = {
-    origin: (origin, callback) => {
-        callback(null, true)
-    },
+const corsOptions ={
+    origin:'*', 
+    credentials:true,            //access-control-allow-credentials:true
+    optionSuccessStatus:200,
 }
-app.options('*', cors(corsOptions))
+app.use(cors(corsOptions))
 
 app.get("/api", (req, res) =>  {
     res.json({"users" : ['userOne', 'userTwo', 'userThree']})
