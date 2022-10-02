@@ -12,31 +12,13 @@ import Home from "./pages/Home";
 import Register from "./pages/Register.js";
 import Vision from "./pages/Vision.js";
 
-let profileData = [];
-function App() {
 
-  // const [backendData, setBackendData] = useState([{}])
+async function App() {
 
-  // useEffect(() => {
-  //   fetch("http://localhost:3000/api").then(
-  //   response => response.json
-  //   ).then(
-  //     data => {
-  //       setBackendData(data)
-  //       console.log('tried to fetch')
-  //     }
-  //   )
-  // }, [])
-
-
-  // useEffect()
-  // fetch("http://localhost:3000/api").then(
-  //   response => console.log(response.body)
-  // )
-  fetch("http://localhost:3000/api")
-  .then((response) => response.body)
-  .then((rb) => {
-    const reader = rb.getReader();
+  // Want to wait for fetch request
+  const response = await fetch("http://localhost:3000/api")
+  function getStreamFromBody(body) {
+    const reader = body.getReader();
 
     return new ReadableStream({
       start(controller) {
@@ -58,80 +40,40 @@ function App() {
         push();
       },
     });
-  })
-  .then((stream) =>
-    // Respond with our stream
-    new Response(stream, { headers: { 'Content-Type': 'text/html' } }).text()
-  )
-  .then((result) => {
-    // Do things with result
-    
-    function getProfiles() {
-      const dataMap = JSON.parse(result);
-      var profileDetails = dataMap["users"]
-      return profileDetails
-    }
+  }
+  // Ready in request as a strea
+  const stream = getStreamFromBody(response.body);
+  // Translate stream -> string -> map
+  const result = await new Response(stream, { headers: { 'Content-Type': 'text/html' } }).text()
+  function getProfiles() {
+    const dataMap = JSON.parse(result);
+    var profileDetails = dataMap["users"]
+    return profileDetails
+  }
+  // Profile data hold array of profile JSON objects
+  let profileData = getProfiles();
 
-    return getProfiles()
-  }).then((profileArray) => {
-    
-    profileData = profileArray;
-    console.log("GOT HERE");
-    console.log(profileData);
-}
-  )
+  console.log('Before Return')
+  console.log(profileData)
+  console.log(typeof(profileData))
+  return (
+    <Router>
+    <Fragment>
+      <MainNavigation/>
+      <Routes>
+        <Route exact path='/' element={<Home/>}>
+          {/* <Route exact path='/' element={<Home/>}/> */}
+        </Route>
+        <Route exact path='/search' element={<Search details={profileData}/>}/>
+        {/* <Route exact path='/login' element={<Login/>}/> */}
+        <Route exact path='/register' element={<Register/>}/>
+        <Route exact path='/vision' element={<Vision/>}/>
 
-
-
-
-/* <div>
-
-{(typeof backendData.users === 'undefined') ? (
-  <p>Loading...</p>
-): (
-  backendData.user.map((user, i) => (
-    <p key={i}> {user}</p>
-  ))
-)}
-
-
-</div> */
-
-// return 
-//  (
-//   <div>
-
-// {(typeof backendData.users === 'undefined') ? (
-//   <p>Loading...</p>
-// ): (
-//   backendData.user.map((user, i) => (
-//     <p key={i}> {user}</p>
-//   ))
-// )}
-
-
-// </div>
-//  )
-console.log('Before Return')
-console.log(profileData)
-return (
-  <Router>
-  <Fragment>
-    <MainNavigation/>
-    <Routes>
-      <Route exact path='/' element={<Home/>}>
-        {/* <Route exact path='/' element={<Home/>}/> */}
-      </Route>
-      <Route exact path='/search' element={<Search details={profileData}/>}/>
-      {/* <Route exact path='/login' element={<Login/>}/> */}
-      <Route exact path='/register' element={<Register/>}/>
-      <Route exact path='/vision' element={<Vision/>}/>
-
-    </Routes>
-  </Fragment>
-  <BottomNavigation> 1 2 3 4</BottomNavigation>
-</Router>
-);
+      </Routes>
+    </Fragment>
+    <BottomNavigation> 1 2 3 4</BottomNavigation>
+  </Router>
+  );
 }
 
 export default App;
