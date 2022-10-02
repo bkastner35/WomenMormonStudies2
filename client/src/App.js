@@ -47,8 +47,10 @@ async function App() {
   const result = await new Response(stream, { headers: { 'Content-Type': 'text/html' } }).text()
   async function getProfiles() {
     const dataMap = JSON.parse(result);
-    var profileDetails = dataMap["users"]
-    return profileDetails
+    // var profileDetails = dataMap["users"]
+    // return profileDetails
+    // Try to return as array instead
+    return Object.values(dataMap);
   }
   // Profile data hold array of profile JSON objects
   let profileData = await getProfiles();
@@ -58,9 +60,10 @@ async function App() {
   console.log(typeof(profileData))
   console.log('InitialDetails')
   console.log(initialDetails)
+  console.log(typeof(initialDetails))
 
   // Waitiing to fetch profile data
-  if (typeof(profileDetails) == 'object') {
+  if (typeof(profileDetails) == 'undefined' || typeof(profileDetails) == 'object') {
     return (
 
       <div>
