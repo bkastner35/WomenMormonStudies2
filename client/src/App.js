@@ -12,9 +12,10 @@ import Home from "./pages/Home";
 import Register from "./pages/Register.js";
 import Vision from "./pages/Vision.js";
 
+let profileData = [];
 function App() {
 
-  const [backendData, setBackendData] = useState([{}])
+  // const [backendData, setBackendData] = useState([{}])
 
   // useEffect(() => {
   //   fetch("http://localhost:3000/api").then(
@@ -64,12 +65,21 @@ function App() {
   )
   .then((result) => {
     // Do things with result
-    const dataMap = JSON.parse(result);
-    console.log(dataMap);
-    console.log(typeof(dataMap))
-    console.log(dataMap["users"])
-    console.log(typeof(dataMap["users"]))
-  });
+    
+    function getProfiles() {
+      const dataMap = JSON.parse(result);
+      var profileDetails = dataMap["users"]
+      return profileDetails
+    }
+
+    return getProfiles()
+  }).then((profileArray) => {
+    
+    profileData = profileArray;
+    console.log("GOT HERE");
+    console.log(profileData);
+}
+  )
 
 
 
@@ -87,45 +97,41 @@ function App() {
 
 </div> */
 
-return 
- (
-  <div>
+// return 
+//  (
+//   <div>
 
-{(typeof backendData.users === 'undefined') ? (
-  <p>Loading...</p>
-): (
-  backendData.user.map((user, i) => (
-    <p key={i}> {user}</p>
-  ))
-)}
-
-
-</div>
- )
+// {(typeof backendData.users === 'undefined') ? (
+//   <p>Loading...</p>
+// ): (
+//   backendData.user.map((user, i) => (
+//     <p key={i}> {user}</p>
+//   ))
+// )}
 
 
+// </div>
+//  )
+console.log('Before Return')
+console.log(profileData)
+return (
+  <Router>
+  <Fragment>
+    <MainNavigation/>
+    <Routes>
+      <Route exact path='/' element={<Home/>}>
+        {/* <Route exact path='/' element={<Home/>}/> */}
+      </Route>
+      <Route exact path='/search' element={<Search details={profileData}/>}/>
+      {/* <Route exact path='/login' element={<Login/>}/> */}
+      <Route exact path='/register' element={<Register/>}/>
+      <Route exact path='/vision' element={<Vision/>}/>
 
-  // return (
-    
-  //   <Router>
-  //   <Fragment>
-  //     <MainNavigation/>
-  //     <Routes>
-  //       <Route exact path='/' element={<Home/>}>
-  //         {/* <Route exact path='/' element={<Home/>}/> */}
-  //       </Route>
-  //       <Route exact path='/search' element={<Search details={initialDetails}/>}/>
-  //       {/* <Route exact path='/login' element={<Login/>}/> */}
-  //       <Route exact path='/register' element={<Register/>}/>
-  //       <Route exact path='/vision' element={<Vision/>}/>
-
-  //     </Routes>
-  //   </Fragment>
-  //   <BottomNavigation> 1 2 3 4</BottomNavigation>
-  // </Router>
-
-  
-  // );
+    </Routes>
+  </Fragment>
+  <BottomNavigation> 1 2 3 4</BottomNavigation>
+</Router>
+);
 }
 
 export default App;
