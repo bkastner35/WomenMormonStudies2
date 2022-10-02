@@ -17,13 +17,13 @@ async function App() {
 
   // Want to wait for fetch request
   const response = await fetch("http://localhost:3000/api")
-  function getStreamFromBody(body) {
+  async function getStreamFromBody(body) {
     const reader = body.getReader();
 
     return new ReadableStream({
       start(controller) {
         // The following function handles each data chunk
-        function push() {
+        async function push() {
           // "done" is a Boolean and value a "Uint8Array"
           reader.read().then(({ done, value }) => {
             // If there is no more data to read
@@ -42,20 +42,23 @@ async function App() {
     });
   }
   // Ready in request as a strea
-  const stream = getStreamFromBody(response.body);
+  const stream = await (response.body);
   // Translate stream -> string -> map
   const result = await new Response(stream, { headers: { 'Content-Type': 'text/html' } }).text()
-  function getProfiles() {
+  async function getProfiles() {
     const dataMap = JSON.parse(result);
     var profileDetails = dataMap["users"]
     return profileDetails
   }
   // Profile data hold array of profile JSON objects
-  let profileData = getProfiles();
+  let profileData = await getProfiles();
 
-  console.log('Before Return')
+  console.log('ProfileData:')
   console.log(profileData)
   console.log(typeof(profileData))
+  console.log('InitialDetails')
+  console.log(initialDetails)
+
   return (
     <Router>
     <Fragment>
@@ -64,7 +67,7 @@ async function App() {
         <Route exact path='/' element={<Home/>}>
           {/* <Route exact path='/' element={<Home/>}/> */}
         </Route>
-        <Route exact path='/search' element={<Search details={profileData}/>}/>
+        <Route exact path='/search' element={<Search details={initialDetails}/>}/>
         {/* <Route exact path='/login' element={<Login/>}/> */}
         <Route exact path='/register' element={<Register/>}/>
         <Route exact path='/vision' element={<Vision/>}/>
