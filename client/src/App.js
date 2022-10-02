@@ -59,24 +59,37 @@ async function App() {
   console.log('InitialDetails')
   console.log(initialDetails)
 
-  return (
-    <Router>
-    <Fragment>
-      <MainNavigation/>
-      <Routes>
-        <Route exact path='/' element={<Home/>}>
-          {/* <Route exact path='/' element={<Home/>}/> */}
-        </Route>
-        <Route exact path='/search' element={<Search details={initialDetails}/>}/>
-        {/* <Route exact path='/login' element={<Login/>}/> */}
-        <Route exact path='/register' element={<Register/>}/>
-        <Route exact path='/vision' element={<Vision/>}/>
+  // Waitiing to fetch profile data
+  if (typeof(profileDetails) == 'object') {
+    return (
 
-      </Routes>
-    </Fragment>
-    <BottomNavigation> 1 2 3 4</BottomNavigation>
-  </Router>
-  );
+      <div>
+        <p>Loading...</p>
+      </div>
+    )
+  }
+  // Content had loaded
+  else {
+    return (
+      <Router>
+      <Fragment>
+        <MainNavigation/>
+        <Routes>
+          <Route exact path='/' element={<Home/>}>
+            {/* <Route exact path='/' element={<Home/>}/> */}
+          </Route>
+          <Route exact path='/search' element={<Search details={profileData}/>}/>
+          {/* <Route exact path='/login' element={<Login/>}/> */}
+          <Route exact path='/register' element={<Register/>}/>
+          <Route exact path='/vision' element={<Vision/>}/>
+  
+        </Routes>
+      </Fragment>
+      <BottomNavigation> 1 2 3 4</BottomNavigation>
+    </Router>
+    );
+  }
+
 }
 
 export default App;
