@@ -14,10 +14,11 @@ import Vision from "./pages/Vision.js";
 
 
 function App() {
-
+  // Stores backend data in backen var
   const [backend, setBackendData] = useState([{}])
 
   useEffect (() => {
+    // Fetches the data as an array of bytes and converts to strea
     fetch("http://localhost:3000/api").then((response) => {
       const body = response.body
       const reader = body.getReader();
@@ -41,17 +42,15 @@ function App() {
           push();
         },
       })
+      
     }).then((stream) => {
+      // Converts stream into string
       return new Response(stream, { headers: { 'Content-Type': 'text/html' } }).text()
     }).then((result) => {
+      // Parses string and conversts to data map object
       const dataMap = JSON.parse(result);
-      return dataMap
-    }).then(
-      data => {
-        console.log(data)
-        setBackendData(data)
-      }
-    )
+      setBackendData(dataMap)
+    })
   }, [])
 
   console.log(backend.users)
