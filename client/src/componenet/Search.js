@@ -11,20 +11,25 @@ function Search({ details }) {
 
   const filteredPersons = details.filter(
     person => {
-      return (
-        person
-        .name
-        .toLowerCase()
-        .includes(searchField.toLowerCase()) ||
-        person
-        .email
-        .toLowerCase()
-        .includes(searchField.toLowerCase()) ||
-        person
-        .interest
+      if (typeof(person.first_name) === 'undefined' && typeof(person.last_name) === 'undefined') {
+        return
+      }
+      else if (typeof(person.first_name) === 'undefined') {
+        return (
+          person
+        .last_name
         .toLowerCase()
         .includes(searchField.toLowerCase())
-      );
+        )
+      }
+      else {
+        return (
+          person
+        .last_name
+        .toLowerCase()
+        .includes(searchField.toLowerCase())
+        )
+      }
     }
   );
 
