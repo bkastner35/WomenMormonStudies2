@@ -1,8 +1,10 @@
 const express = require('express')
+var cors = require('cors')
 const MongoClient = require('mongodb').MongoClient
 const app = express()
 
 app.use(express.json())
+app.use(cors())
 var database
 
 app.get('/', (req, resp) => {

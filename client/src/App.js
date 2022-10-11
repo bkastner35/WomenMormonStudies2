@@ -7,7 +7,6 @@ import {
 } from "react-router-dom";
 import MainNavigation from "./componenet/MainNav.js";
 import Search from "./componenet/Search.js";
-import initialDetails from "./data/initialDetails.js";
 import Home from "./pages/Home";
 import Register from "./pages/Register.js";
 import Vision from "./pages/Vision.js";
@@ -19,9 +18,10 @@ function App() {
 
   useEffect (() => {
     // Fetches the data as an array of bytes and converts to strea
-    fetch("http://localhost:3000/api").then((response) => {
+    fetch("http://localhost:8080/api/Experts").then((response) => {
       const body = response.body
       const reader = body.getReader();
+      
       return new ReadableStream({
         start(controller) {
           // The following function handles each data chunk
@@ -53,12 +53,12 @@ function App() {
     })
   }, [])
 
-  console.log(backend.users)
+  console.log(backend)
   return (
 
     <div>
 
-      {(typeof backend.users === 'undefined') ?
+      {(typeof(backend) === 'undefined') ?
       (
         <p>Loading...</p>
       ):
@@ -70,7 +70,7 @@ function App() {
             <Route exact path='/' element={<Home/>}>
               {/* <Route exact path='/' element={<Home/>}/> */}
             </Route>
-            <Route exact path='/search' element={<Search details={backend.users}/>}/>
+            <Route exact path='/search' element={<Search details={backend}/>}/>
             {/* <Route exact path='/login' element={<Login/>}/> */}
             <Route exact path='/register' element={<Register/>}/>
             <Route exact path='/vision' element={<Vision/>}/>
