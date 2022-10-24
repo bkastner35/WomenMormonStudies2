@@ -1,6 +1,7 @@
 // src/components/Card.js
 
 import React from 'react';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 
  class Card extends React.Component {
@@ -10,10 +11,8 @@ import React from 'react';
    }
 
    handleClick() {
-    window.location.href="https://www.youtube.com/watch?v=ihloYYx7qfY"
+    
   };
-
- 
 
  render() {
   return(

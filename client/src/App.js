@@ -3,7 +3,7 @@ import React, {useEffect, useState, Fragment} from "react";
 import {
   BrowserRouter as Router,
   Routes,
-  Route
+  Route, Switch
 } from "react-router-dom";
 import MainNavigation from "./componenet/MainNav.js";
 import Search from "./componenet/Search.js";
@@ -67,11 +67,9 @@ function App() {
         <Fragment>
           <MainNavigation/>
           <Routes>
-            <Route exact path='/' element={<Home/>}>
-              {/* <Route exact path='/' element={<Home/>}/> */}
-            </Route>
+
+            <Route exact path='/' element={<Home/>}></Route>
             <Route exact path='/search' element={<Search details={backend}/>}/>
-            {/* <Route exact path='/login' element={<Login/>}/> */}
             <Route exact path='/register' element={<Register/>}/>
             <Route exact path='/vision' element={<Vision/>}/>
     
