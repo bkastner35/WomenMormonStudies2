@@ -13,7 +13,7 @@ function MainNavigation() {
             <Link id ="Home page"to='/'>Home</Link>
           </li>
           <li>
-            <Link id = "Vision page"to='/vision'>Our Vision</Link>
+            <Link id = "Vision page"to='/signin'>Sign In</Link>
           </li>
           <li>
             <Link id ="Register page"to='/register'>Register as an Expert</Link>

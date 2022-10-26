@@ -73,7 +73,7 @@ function App() {
             <Route exact path='/search' element={<Search details={backend}/>}/>
             {/* <Route exact path='/login' element={<Login/>}/> */}
             <Route exact path='/register' element={<Register/>}/>
-            <Route exact path='/vision' element={<Vision/>}/>
+            <Route exact path='/signin' element={<Vision/>}/>
     
           </Routes>
         </Fragment>
