@@ -24,8 +24,12 @@ function Search({ details }) {
       }
       else {
         return (
-          person
+        person
         .last_name
+        .toLowerCase()
+        .includes(searchField.toLowerCase()) ||
+        person
+        .first_name
         .toLowerCase()
         .includes(searchField.toLowerCase())
         )
