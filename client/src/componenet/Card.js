@@ -47,7 +47,7 @@ class Card extends React.Component {
    }
 
    handleClick() {
-    window.location.href="https://www.youtube.com/watch?v=ihloYYx7qfY"
+    
   };
 
  render() {
@@ -63,7 +63,6 @@ class Card extends React.Component {
   }
 
  }
-
 
 
 export default Card;
