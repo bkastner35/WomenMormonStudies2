@@ -10,7 +10,7 @@ import Search from "./componenet/Search.js";
 import Home from "./pages/Home";
 import Register from "./pages/Register.js";
 import Vision from "./pages/Vision.js";
-
+import Admin from "./pages/Admin.js"
 
 function App() {
   // Stores backend data in backen var
@@ -74,7 +74,7 @@ function App() {
             {/* <Route exact path='/login' element={<Login/>}/> */}
             <Route exact path='/register' element={<Register/>}/>
             <Route exact path='/signin' element={<Vision/>}/>
-    
+            <Route exact path='/admin/newell/signin' element={<Admin values = {backend}/>}/>    
           </Routes>
         </Fragment>
         <BottomNavigation> 1 2 3 4</BottomNavigation>

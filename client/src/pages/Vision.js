@@ -7,6 +7,8 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import WebImage from '../componenet/WebImage';
 import CatagoryBox from '../componenet/CatagoryBox';
+import emailjs from 'emailjs-com';
+
 
 
 
@@ -20,12 +22,21 @@ const theme = createTheme({palette:
 
 export default function Vision() {
   const handleSubmit = (event) => {
+    event.preventDefault();    //This is important, i'm not sure why, but the email won't send without it
+
+    emailjs.sendForm('service_owv6uf2', 'template_8mdujsg', event.target,'gwLqAr-2_XGu3Hkxo')
+      .then((result) => {
+          window.location.reload()  //This is if you still want the page to reload (since e.preventDefault() cancelled that behavior) 
+      }, (error) => {
+          console.log("we got a problem");
+      });
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
       email: data.get('email'),
       password: data.get('password'),
     });
+
   };
 
   return (

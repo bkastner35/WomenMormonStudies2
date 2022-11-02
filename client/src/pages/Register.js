@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useState} from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
@@ -7,6 +8,9 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import WebImage from '../componenet/WebImage';
 import CatagoryBox from '../componenet/CatagoryBox';
+import emailjs from "emailjs-com"
+
+
 
 
 const theme = createTheme({palette:
@@ -17,13 +21,29 @@ const theme = createTheme({palette:
 });
 
 export default function Register() {
+  const userInput = React.useRef();
+  const emailInput = React.useRef();
+  const passwordInput = React.useRef();
+
   const handleSubmit = (event) => {
+
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    console.log(userInput.current)
+    console.log(emailInput.current)
+    console.log(passwordInput.current)
+
+
+    event.preventDefault();    //This is important, i'm not sure why, but the email won't send without it
+
+    emailjs.sendForm('service_owv6uf2', 'template_8mdujsg', event.target, 'gwLqAr-2_XGu3Hkxo')
+      .then((result) => {
+          window.location.reload()  //This is if you still want the page to reload (since e.preventDefault() cancelled that behavior) 
+      }, (error) => {
+          console.log(error.text);
+      });
+
+
+
   };
 
   return (
@@ -43,6 +63,7 @@ export default function Register() {
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <TextField
+              ref = {userInput}
               margin="normal"
               required
               fullWidth
@@ -53,6 +74,7 @@ export default function Register() {
               autoFocus
             />
             <TextField
+              ref = {emailInput}
               margin="normal"
               required
               fullWidth
@@ -61,8 +83,10 @@ export default function Register() {
               name="email"
               autoComplete="email"
               autoFocus
+
             />
             <TextField
+              ref = {passwordInput}
               margin="normal"
               required
               fullWidth
