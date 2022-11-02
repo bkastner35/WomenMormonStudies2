@@ -1,6 +1,7 @@
 {
   "name": "thesis",
   "version": "0.1.0",
+  "homepage": "http://womeninmormonstudies.godaddysites.com/",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.4",
@@ -17,7 +18,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "PORT=3001 react-scripts start",
+    "start": "PORT=3000 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
