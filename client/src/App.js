@@ -18,7 +18,7 @@ function App() {
 
   useEffect (() => {
     // Fetches the data as an array of bytes and converts to strea
-    fetch("http://localhost:8080/api/Experts").then((response) => {
+    fetch("http://localhost:3001/api/Experts").then((response) => {
       const body = response.body
       const reader = body.getReader();
       
